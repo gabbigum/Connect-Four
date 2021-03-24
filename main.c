@@ -8,15 +8,15 @@
 #define PLAYER_2 'B'
 
 
-void displayBoard(char [BOARD_HEIGHT][BOARD_WIDTH]);
+void updateBoard(char [BOARD_HEIGHT][BOARD_WIDTH]);
 
 void fillBoard(char [BOARD_HEIGHT][BOARD_WIDTH]);
 
 bool insertDisc(char [BOARD_HEIGHT][BOARD_WIDTH], char, int);
 
 
-int main() {
 
+int main() {
     char board[BOARD_HEIGHT][BOARD_WIDTH];
 
     fillBoard(board);
@@ -30,8 +30,11 @@ int main() {
     insertDisc(board, PLAYER_1, 3);
     insertDisc(board, PLAYER_1, 3);
     insertDisc(board, PLAYER_1, 3);
+    insertDisc(board, PLAYER_1, 3);
+    insertDisc(board, PLAYER_1, 3);
+    insertDisc(board, PLAYER_1, 3);
 
-    displayBoard(board);
+    updateBoard(board);
     return 0;
 }
 
@@ -61,7 +64,7 @@ bool insertDisc(char board[BOARD_HEIGHT][BOARD_WIDTH], char player, int position
     return true;
 }
 
-void displayBoard(char board[BOARD_HEIGHT][BOARD_WIDTH]) {
+void updateBoard(char board[BOARD_HEIGHT][BOARD_WIDTH]) {
     for (int i = 1; i <= BOARD_WIDTH; i++) {
         printf("%d", i);
     }
