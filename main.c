@@ -4,8 +4,8 @@
 #define BOARD_WIDTH 7
 #define BOARD_HEIGHT 6
 
-#define PLAYER_1 'A'
-#define PLAYER_2 'B'
+#define PLAYER_A 'A'
+#define PLAYER_B 'B'
 
 #define WINNING_DISCS 4
 
@@ -35,19 +35,20 @@ int main() {
         int position;
 
         if (movesCounter % 2 == 0) {
-            printf("Player 2 choose a position :");
+            printf("Player B choose a position :");
             scanf("%d", &position);
-            insertDisc(board, PLAYER_2, position);
-            if (checkHorizontal(board, PLAYER_2) || checkVertical(board, PLAYER_2)) {
-                printf("Player 2 wins\n"); // might use string
+            insertDisc(board, PLAYER_B, position);
+            // make to isWinning method
+            if (checkHorizontal(board, PLAYER_B) || checkVertical(board, PLAYER_B)) {
+                printf("Player B wins!\n"); // might use string
                 hasWinner = true;
             }
         } else {
-            printf("Player 1 choose a position :");
+            printf("Player A choose a position :");
             scanf("%d", &position);
-            insertDisc(board, PLAYER_1, position);
-            if (checkHorizontal(board, PLAYER_1) || checkVertical(board, PLAYER_1)) {
-                printf("Player 1 wins\n"); // might use string
+            insertDisc(board, PLAYER_A, position);
+            if (checkHorizontal(board, PLAYER_A) || checkVertical(board, PLAYER_A)) {
+                printf("Player A wins!\n"); // might use string
                 hasWinner = true;
             }
         }
@@ -114,16 +115,16 @@ bool insertDisc(char board[BOARD_HEIGHT][BOARD_WIDTH], char player, int position
     }
     position--;
     // check if it is at the top of the board
-    if (board[0][position] == PLAYER_1 ||
-        board[0][position] == PLAYER_2) {
+    if (board[0][position] == PLAYER_A ||
+        board[0][position] == PLAYER_B) {
         return false;
     }
 
     // iterate over the height
     int i = 0;
     while (i < BOARD_HEIGHT) {
-        if (board[i][position] == PLAYER_1 ||
-            board[i][position] == PLAYER_2) {
+        if (board[i][position] == PLAYER_A ||
+            board[i][position] == PLAYER_B) {
             //  i--;
             break;
         }
