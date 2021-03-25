@@ -18,6 +18,7 @@ bool insertDisc(char [BOARD_HEIGHT][BOARD_WIDTH], char, int);
 
 bool checkHorizontal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
+bool checkVertical(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
 int main() {
     char board[BOARD_HEIGHT][BOARD_WIDTH];
@@ -26,20 +27,15 @@ int main() {
 
     // PLAYER A
     // PLAYER B
-
     // test disc insertion
     insertDisc(board, PLAYER_1, 3);
-    insertDisc(board, PLAYER_2, 1);
     insertDisc(board, PLAYER_1, 4);
     insertDisc(board, PLAYER_1, 5);
-    insertDisc(board, PLAYER_2, 6);
-
-    insertDisc(board, PLAYER_2, 3);
     insertDisc(board, PLAYER_2, 1);
-    insertDisc(board, PLAYER_2, 4);
-    insertDisc(board, PLAYER_2, 5);
-    insertDisc(board, PLAYER_2, 6);
+    insertDisc(board, PLAYER_1, 1);
+    insertDisc(board, PLAYER_1, 2);
 
+    // insertDisc(board, PLAYER_2, 1);
 
     bool isPlayerOneWinning = checkHorizontal(board, PLAYER_1);
 
@@ -49,7 +45,7 @@ int main() {
         printf("Player 1 wins\n");
     }
 
-    bool isPlayerTwoWinning = checkHorizontal(board, PLAYER_2);
+    bool isPlayerTwoWinning = checkVertical(board, PLAYER_2);
 
     if(isPlayerTwoWinning) {
         printf("Player 2 wins\n");
@@ -58,16 +54,39 @@ int main() {
     return 0;
 }
 
+// loops over columns and checks for vertical connect four starting from the bottom
+bool checkVertical(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
+    // iterate columns
+
+    for(int i = 0; i < BOARD_WIDTH; i++) {
+
+        // it would be better if it starts from the bottom
+        for(int start = BOARD_HEIGHT - 1, end = start - 4; end >= 0; start--, end--) {
+            int consec = 0;
+
+            for(int j = start; j >= end; j--) {
+                if(board[j][i] == player) {
+                    consec++;
+                } else {
+                    consec = 0;
+                }
+                if(consec == 4) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+// loops over rows starting from the bottom and checks for horizontal connect four starting from left to right
 bool checkHorizontal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     // scope is WINNING_DISCS
     // use windowing for horizontal board
 
-    //int start, end;
+    for(int i = BOARD_HEIGHT - 1; i >= 0; i--) {
 
-
-    for(int i = 0; i < BOARD_HEIGHT; i++) {
-
-        // sliding window
+        // sliding window it would be better if it starts from the bottom
         for(int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
             int consec = 0;
 
@@ -82,8 +101,6 @@ bool checkHorizontal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
                 }
             }
         }
-        //start = 0;
-        //end = WINNING_DISCS;
     }
     return false;
 }
@@ -104,6 +121,7 @@ bool insertDisc(char board[BOARD_HEIGHT][BOARD_WIDTH], char player, int position
     while (i < BOARD_HEIGHT) {
         if (board[i][position] == PLAYER_1 ||
             board[i][position] == PLAYER_2) {
+          //  i--;
             break;
         }
         i++;
