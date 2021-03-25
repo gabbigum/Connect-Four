@@ -28,6 +28,8 @@ int main() {
 
     fillBoard(board);
 
+    // THIS WHOLE THING UNDER COULD BE SEPARATE METHOD TO BE SELECTED FROM THE MENU
+    // FOR EXAMPLE THE GAME COULD BE PLAYED BY MORE THAN 1 PLAYER
     int movesCounter = 1;
     bool hasWinner = false;
 
@@ -121,17 +123,16 @@ bool insertDisc(char board[BOARD_HEIGHT][BOARD_WIDTH], char player, int position
     }
     position--;
     // check if it is at the top of the board
-    if (board[0][position] == PLAYER_A ||
-        board[0][position] == PLAYER_B) {
+    if (board[0][position] != '.') {
+        printf("Your move is not valid. You have reached the top of the board.\n");
         return false;
     }
 
     // iterate over the height
     int i = 0;
     while (i < BOARD_HEIGHT) {
-        if (board[i][position] == PLAYER_A ||
-            board[i][position] == PLAYER_B) {
-            //  i--;
+        if (board[i][position] != '.') {
+            printf("Invalid move! You have reached the top of the board.\n");
             break;
         }
         i++;
