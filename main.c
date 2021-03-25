@@ -20,11 +20,13 @@ bool checkHorizontal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
 bool checkVertical(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
+bool isWinning(char [BOARD_HEIGHT][BOARD_WIDTH], char);
+
+
 int main() {
     char board[BOARD_HEIGHT][BOARD_WIDTH];
 
     fillBoard(board);
-
 
     int movesCounter = 1;
     bool hasWinner = false;
@@ -38,8 +40,8 @@ int main() {
             printf("Player B choose a position :");
             scanf("%d", &position);
             insertDisc(board, PLAYER_B, position);
-            // make to isWinning method
-            if (checkHorizontal(board, PLAYER_B) || checkVertical(board, PLAYER_B)) {
+
+            if (isWinning(board, PLAYER_B)) {
                 printf("Player B wins!\n"); // might use string
                 hasWinner = true;
             }
@@ -47,7 +49,7 @@ int main() {
             printf("Player A choose a position :");
             scanf("%d", &position);
             insertDisc(board, PLAYER_A, position);
-            if (checkHorizontal(board, PLAYER_A) || checkVertical(board, PLAYER_A)) {
+            if (isWinning(board, PLAYER_A)) {
                 printf("Player A wins!\n"); // might use string
                 hasWinner = true;
             }
@@ -56,6 +58,10 @@ int main() {
         position = 0;
     }
     return 0;
+}
+
+bool isWinning(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
+    return checkHorizontal(board, player) || checkVertical(board, player);
 }
 
 // loops over columns and checks for vertical connect four starting from the bottom
