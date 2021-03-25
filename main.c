@@ -25,32 +25,35 @@ int main() {
 
     fillBoard(board);
 
-    // PLAYER A
-    // PLAYER B
-    // test disc insertion
-    insertDisc(board, PLAYER_1, 3);
-    insertDisc(board, PLAYER_1, 4);
-    insertDisc(board, PLAYER_1, 5);
-    insertDisc(board, PLAYER_2, 1);
-    insertDisc(board, PLAYER_1, 1);
-    insertDisc(board, PLAYER_1, 2);
 
-    // insertDisc(board, PLAYER_2, 1);
+    int movesCounter = 1;
+    bool hasWinner = false;
 
-    bool isPlayerOneWinning = checkHorizontal(board, PLAYER_1);
+    while (!hasWinner) {
+        updateBoard(board);
 
-    updateBoard(board);
+        int position;
 
-    if(isPlayerOneWinning) {
-        printf("Player 1 wins\n");
+        if (movesCounter % 2 == 0) {
+            printf("Player 2 choose a position :");
+            scanf("%d", &position);
+            insertDisc(board, PLAYER_2, position);
+            if (checkHorizontal(board, PLAYER_2) || checkVertical(board, PLAYER_2)) {
+                printf("Player 2 wins\n"); // might use string
+                hasWinner = true;
+            }
+        } else {
+            printf("Player 1 choose a position :");
+            scanf("%d", &position);
+            insertDisc(board, PLAYER_1, position);
+            if (checkHorizontal(board, PLAYER_1) || checkVertical(board, PLAYER_1)) {
+                printf("Player 1 wins\n"); // might use string
+                hasWinner = true;
+            }
+        }
+        movesCounter++;
+        position = 0;
     }
-
-    bool isPlayerTwoWinning = checkVertical(board, PLAYER_2);
-
-    if(isPlayerTwoWinning) {
-        printf("Player 2 wins\n");
-    }
-
     return 0;
 }
 
@@ -58,19 +61,19 @@ int main() {
 bool checkVertical(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     // iterate columns
 
-    for(int i = 0; i < BOARD_WIDTH; i++) {
+    for (int i = 0; i < BOARD_WIDTH; i++) {
 
         // it would be better if it starts from the bottom
-        for(int start = BOARD_HEIGHT - 1, end = start - 4; end >= 0; start--, end--) {
+        for (int start = BOARD_HEIGHT - 1, end = start - 4; end >= 0; start--, end--) {
             int consec = 0;
 
-            for(int j = start; j >= end; j--) {
-                if(board[j][i] == player) {
+            for (int j = start; j >= end; j--) {
+                if (board[j][i] == player) {
                     consec++;
                 } else {
                     consec = 0;
                 }
-                if(consec == 4) {
+                if (consec == 4) {
                     return true;
                 }
             }
@@ -84,19 +87,19 @@ bool checkHorizontal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     // scope is WINNING_DISCS
     // use windowing for horizontal board
 
-    for(int i = BOARD_HEIGHT - 1; i >= 0; i--) {
+    for (int i = BOARD_HEIGHT - 1; i >= 0; i--) {
 
         // sliding window it would be better if it starts from the bottom
-        for(int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
+        for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
             int consec = 0;
 
-            for(int j = start; j <= end; j++) {
-                if(board[i][j] == player) {
+            for (int j = start; j <= end; j++) {
+                if (board[i][j] == player) {
                     consec++;
                 } else {
                     consec = 0;
                 }
-                if(consec == 4) {
+                if (consec == 4) {
                     return true;
                 }
             }
@@ -121,7 +124,7 @@ bool insertDisc(char board[BOARD_HEIGHT][BOARD_WIDTH], char player, int position
     while (i < BOARD_HEIGHT) {
         if (board[i][position] == PLAYER_1 ||
             board[i][position] == PLAYER_2) {
-          //  i--;
+            //  i--;
             break;
         }
         i++;
