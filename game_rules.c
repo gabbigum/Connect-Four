@@ -4,7 +4,6 @@
 
 #include "game_rules.h"
 
-
 // loops over columns and checks for vertical connect four starting from the bottom
 bool checkVertical(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     // iterate columns
