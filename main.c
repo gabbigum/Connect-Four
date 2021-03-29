@@ -67,7 +67,7 @@ int main() {
 }
 
 bool isWinning(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
-    return checkHorizontal(board, player) || checkVertical(board, player);
+    return checkHorizontal(board, player) || checkVertical(board, player) || checkLeftDiagonal(board, player);
 }
 
 // loops over columns and checks for vertical connect four starting from the bottom
@@ -133,20 +133,19 @@ bool checkDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
 }
 
 bool checkLeftDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
-    for (int k = 0; k < BOARD_HEIGHT - 1; k++) {
+    for (int k = 0; k <= BOARD_HEIGHT - 1; k++) {
         int i = k;
         int j = 0;
 
         // create array to store the elements
-        char diagonals[BOARD_HEIGHT + BOARD_WIDTH - 1];
+        char diagonals[BOARD_HEIGHT];
         int counter = 0;
 
         while (i >= 0) {
-            printf("%c", board[i][j]);
+            diagonals[counter] = board[i][j];
             i--;
             j++;
-
-            diagonals[counter] = board[i][j];
+            counter++;
         }
         counter = 0;
 
@@ -154,7 +153,7 @@ bool checkLeftDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
         for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
             int consec = 0;
 
-            for (int ii = start; ii <= end; i++) {
+            for (int ii = start; ii <= end; ii++) {
                 if (diagonals[ii] == player) {
                     consec++;
                 } else {
@@ -172,18 +171,21 @@ bool checkLeftDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
         int i = BOARD_HEIGHT - 1;
         int j = k;
 
+        char diagonals[BOARD_HEIGHT];
+        int counter = 0;
+
         while (j <= BOARD_WIDTH - 1) {
-            printf("%c", board[i][j]);
+            diagonals[counter] = board[i][j];
             i--;
             j++;
+            counter++;
         }
-        char diagonals[BOARD_HEIGHT + BOARD_WIDTH - 1];
-        int counter = 0;
+        counter = 0;
 
         for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
             int consec = 0;
 
-            for (int ii = start; ii <= end; i++) {
+            for (int ii = start; ii <= end; ii++) {
                 if (diagonals[ii] == player) {
                     consec++;
                 } else {
@@ -226,6 +228,7 @@ bool insertDisc(char board[BOARD_HEIGHT][BOARD_WIDTH], char player, int position
 }
 
 void updateBoard(char board[BOARD_HEIGHT][BOARD_WIDTH]) {
+    // move numbers
     for (int i = 1; i <= BOARD_WIDTH; i++) {
         printf("%d", i);
     }
