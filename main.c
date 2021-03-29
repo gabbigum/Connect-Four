@@ -20,6 +20,10 @@ bool checkHorizontal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
 bool checkVertical(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
+bool checkDiagonal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
+
+bool checkLeftDiagonal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
+
 bool isWinning(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
 
@@ -117,12 +121,91 @@ bool checkHorizontal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     return false;
 }
 
+bool checkDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
+    // diagonal windowing
+    // check left diagonal
+    // check right diagonal
+    if(checkLeftDiagonal(board, player)) {
+        return true;
+    }
+
+    return false;
+}
+
+bool checkLeftDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
+    for (int k = 0; k < BOARD_HEIGHT - 1; k++) {
+        int i = k;
+        int j = 0;
+
+        // create array to store the elements
+        char diagonals[BOARD_HEIGHT + BOARD_WIDTH - 1];
+        int counter = 0;
+
+        while (i >= 0) {
+            printf("%c", board[i][j]);
+            i--;
+            j++;
+
+            diagonals[counter] = board[i][j];
+        }
+        counter = 0;
+
+        // windowing
+        for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
+            int consec = 0;
+
+            for (int ii = start; ii <= end; i++) {
+                if (diagonals[ii] == player) {
+                    consec++;
+                } else {
+                    consec = 0;
+                }
+                if (consec == 4) {
+                    return true;
+                }
+            }
+        }
+
+    }
+
+    for (int k = 1; k <= BOARD_WIDTH - 1; k++) {
+        int i = BOARD_HEIGHT - 1;
+        int j = k;
+
+        while (j <= BOARD_WIDTH - 1) {
+            printf("%c", board[i][j]);
+            i--;
+            j++;
+        }
+        char diagonals[BOARD_HEIGHT + BOARD_WIDTH - 1];
+        int counter = 0;
+
+        for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
+            int consec = 0;
+
+            for (int ii = start; ii <= end; i++) {
+                if (diagonals[ii] == player) {
+                    consec++;
+                } else {
+                    consec = 0;
+                }
+                if (consec == 4) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
 bool insertDisc(char board[BOARD_HEIGHT][BOARD_WIDTH], char player, int position) {
     if (position > BOARD_WIDTH || position <= 0) {
         return false;
     }
     position--;
     // check if it is at the top of the board
+    //TODO bug there
     if (board[0][position] != '.') {
         printf("Your move is not valid. You have reached the top of the board.\n");
         return false;
@@ -132,7 +215,6 @@ bool insertDisc(char board[BOARD_HEIGHT][BOARD_WIDTH], char player, int position
     int i = 0;
     while (i < BOARD_HEIGHT) {
         if (board[i][position] != '.') {
-            printf("Invalid move! You have reached the top of the board.\n");
             break;
         }
         i++;
