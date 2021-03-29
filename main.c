@@ -125,11 +125,7 @@ bool checkDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     // diagonal windowing
     // check left diagonal
     // check right diagonal
-    if(checkLeftDiagonal(board, player)) {
-        return true;
-    }
-
-    return false;
+    return checkLeftDiagonal(board, player);
 }
 
 bool checkLeftDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
