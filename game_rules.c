@@ -4,8 +4,12 @@
 
 #include "game_rules.h"
 
-// loops over columns and checks for vertical connect four starting from the bottom
 bool areFourConsecutive(char player, const char *diagonals);
+
+bool checkLeftDiagonal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
+
+bool checkRightDiagonal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
+
 
 bool checkVertical(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     // iterate columns
