@@ -79,8 +79,8 @@ bool areFourConsecutive(char player, const char *diagonals) {
     for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
         int consec = 0;
 
-        for (int ii = start; ii <= end; ii++) {
-            if (diagonals[ii] == player) {
+        for (int i = start; i <= end; i++) {
+            if (diagonals[i] == player) {
                 consec++;
             } else {
                 consec = 0;
