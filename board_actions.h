@@ -14,5 +14,4 @@ void fillBoard(char [BOARD_HEIGHT][BOARD_WIDTH]);
 
 bool insertDisc(char [BOARD_HEIGHT][BOARD_WIDTH], char, int);
 
-
 #endif
