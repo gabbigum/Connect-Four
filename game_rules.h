@@ -21,5 +21,6 @@ bool checkDiagonal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
 bool checkLeftDiagonal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
+bool checkRightDiagonal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
 #endif

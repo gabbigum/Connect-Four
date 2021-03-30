@@ -59,10 +59,83 @@ bool checkDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     // diagonal windowing
     // check left diagonal
     // check right diagonal
-    return checkLeftDiagonal(board, player);
+    return checkLeftDiagonal(board, player) || checkRightDiagonal(board, player);
+}
+
+bool checkRightDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
+    // lower half - works
+    for(int k = BOARD_HEIGHT - 1; k >= 0; k--) {
+        int i = k;
+        int j = BOARD_WIDTH - 1;
+
+        char diagonals[BOARD_HEIGHT];
+        int counter = 0;
+        // i must be board[max][max] starting
+        while(i >= 0) {
+            diagonals[counter] = board[i][j];
+            i--;
+            j--;
+            counter++;
+        }
+        counter = 0;
+
+        for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
+            int consec = 0;
+
+            for (int ii = start; ii <= end; ii++) {
+                if (diagonals[ii] == player) {
+                    consec++;
+                } else {
+                    consec = 0;
+                }
+                if (consec == 4) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    // upper half
+
+
+    return false;
 }
 
 bool checkLeftDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
+    // start with lower diagonal
+    for (int k = 1; k <= BOARD_WIDTH - 1; k++) {
+        int i = BOARD_HEIGHT - 1;
+        int j = k;
+
+        // TODO might be board_height -1
+        char diagonals[BOARD_HEIGHT];
+        int counter = 0;
+
+        while (j <= BOARD_WIDTH - 1) {
+            diagonals[counter] = board[i][j];
+            i--;
+            j++;
+            counter++;
+        }
+        counter = 0;
+
+        for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
+            int consec = 0;
+
+            for (int ii = start; ii <= end; ii++) {
+                if (diagonals[ii] == player) {
+                    consec++;
+                } else {
+                    consec = 0;
+                }
+                if (consec == 4) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    // upper diagonal
     for (int k = 0; k <= BOARD_HEIGHT - 1; k++) {
         int i = k;
         int j = 0;
@@ -96,38 +169,6 @@ bool checkLeftDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
         }
 
     }
-
-    for (int k = 1; k <= BOARD_WIDTH - 1; k++) {
-        int i = BOARD_HEIGHT - 1;
-        int j = k;
-
-        char diagonals[BOARD_HEIGHT];
-        int counter = 0;
-
-        while (j <= BOARD_WIDTH - 1) {
-            diagonals[counter] = board[i][j];
-            i--;
-            j++;
-            counter++;
-        }
-        counter = 0;
-
-        for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
-            int consec = 0;
-
-            for (int ii = start; ii <= end; ii++) {
-                if (diagonals[ii] == player) {
-                    consec++;
-                } else {
-                    consec = 0;
-                }
-                if (consec == 4) {
-                    return true;
-                }
-            }
-        }
-    }
-
     return false;
 }
 
