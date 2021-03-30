@@ -13,10 +13,4 @@
 
 bool isWinning(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
-bool checkHorizontal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
-
-bool checkVertical(char [BOARD_HEIGHT][BOARD_WIDTH], char);
-
-bool checkDiagonal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
-
 #endif

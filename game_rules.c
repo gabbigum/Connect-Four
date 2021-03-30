@@ -10,6 +10,12 @@ bool checkLeftDiagonal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
 bool checkRightDiagonal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
+bool checkHorizontal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
+
+bool checkVertical(char [BOARD_HEIGHT][BOARD_WIDTH], char);
+
+bool checkDiagonal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
+
 
 bool checkVertical(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     // iterate columns
