@@ -5,12 +5,13 @@
 #include "game_rules.h"
 
 // loops over columns and checks for vertical connect four starting from the bottom
+bool areFourConsecutive(char player, const char *diagonals);
+
 bool checkVertical(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     // iterate columns
 
     for (int i = 0; i < BOARD_WIDTH; i++) {
 
-        // it would be better if it starts from the bottom
         for (int start = BOARD_HEIGHT - 1, end = start - 4; end >= 0; start--, end--) {
             int consec = 0;
 
@@ -62,16 +63,36 @@ bool checkDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     return checkLeftDiagonal(board, player) || checkRightDiagonal(board, player);
 }
 
+
+// windowing to see if diagonals contains four consecutive player letters
+bool areFourConsecutive(char player, const char *diagonals) {
+    for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
+        int consec = 0;
+
+        for (int ii = start; ii <= end; ii++) {
+            if (diagonals[ii] == player) {
+                consec++;
+            } else {
+                consec = 0;
+            }
+            if (consec == 4) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool checkRightDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     // lower half - works
-    for(int k = BOARD_HEIGHT - 1; k >= 0; k--) {
+    for (int k = BOARD_HEIGHT - 1; k >= 0; k--) {
         int i = k;
         int j = BOARD_WIDTH - 1;
 
         char diagonals[BOARD_HEIGHT];
         int counter = 0;
         // i must be board[max][max] starting
-        while(i >= 0) {
+        while (i >= 0) {
             diagonals[counter] = board[i][j];
             i--;
             j--;
@@ -79,24 +100,12 @@ bool checkRightDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
         }
         counter = 0;
 
-        for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
-            int consec = 0;
-
-            for (int ii = start; ii <= end; ii++) {
-                if (diagonals[ii] == player) {
-                    consec++;
-                } else {
-                    consec = 0;
-                }
-                if (consec == 4) {
-                    return true;
-                }
-            }
+        if (areFourConsecutive(player, diagonals)) {
+            return true;
         }
     }
 
     // upper half
-
 
     return false;
 }
@@ -119,19 +128,8 @@ bool checkLeftDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
         }
         counter = 0;
 
-        for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
-            int consec = 0;
-
-            for (int ii = start; ii <= end; ii++) {
-                if (diagonals[ii] == player) {
-                    consec++;
-                } else {
-                    consec = 0;
-                }
-                if (consec == 4) {
-                    return true;
-                }
-            }
+        if (areFourConsecutive(player, diagonals)) {
+            return true;
         }
     }
 
@@ -152,22 +150,9 @@ bool checkLeftDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
         }
         counter = 0;
 
-        // windowing
-        for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
-            int consec = 0;
-
-            for (int ii = start; ii <= end; ii++) {
-                if (diagonals[ii] == player) {
-                    consec++;
-                } else {
-                    consec = 0;
-                }
-                if (consec == 4) {
-                    return true;
-                }
-            }
+        if (areFourConsecutive(player, diagonals)) {
+            return true;
         }
-
     }
     return false;
 }
