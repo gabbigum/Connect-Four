@@ -4,8 +4,24 @@
 
 #include "game_engine.h"
 
+struct Move {
+    char player;
+    int position;
+    struct Move *nextMove;
+};
+
+struct MovesQueue {
+    struct Move *currentMove, *rear;
+    // the logic will look like that
+    // on UNDO - if the currentMove is rear
+    // -> get that data and remove the disc from the board ->removeDisc(board, player, position)
+    // on REDO -> read currentMove.nextMove and insertDisc(board, player, position)
+};
+
 void playGame() {
     char board[BOARD_HEIGHT][BOARD_WIDTH];
+    // moves queue
+
 
     fillBoard(board);
 
