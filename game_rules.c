@@ -115,7 +115,26 @@ bool checkRightDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
         }
     }
 
-    // upper half
+    // upper half - works
+    for(int k = 0; k <= BOARD_HEIGHT-1; k++) {
+        int i = k;
+        int j = BOARD_WIDTH - 1;
+
+        char diagonals[BOARD_HEIGHT];
+        int counter = 0;
+
+        while(i >= 0) {
+            diagonals[counter] = board[i][j];
+            j--;
+            i--;
+            counter++;
+        }
+        counter = 0;
+
+        if(areFourConsecutive(player, diagonals)) {
+            return true;
+        }
+    }
 
     return false;
 }
