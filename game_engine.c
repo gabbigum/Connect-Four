@@ -12,17 +12,19 @@ void printChoosePosition(char);
 //TODO I might want to use doubly linked list
 struct Move {
     char player;
-    int position;
+    int posX;
+    int posY;
     struct Move *nextMove;
     struct Move *prevMove;
 };
 
-struct Move* addToEnd(struct Move **queue, char player, int position) {
+struct Move* addToEnd(struct Move **queue, char player, int posX, int posY) {
     struct Move *iterator, *newMove, *currentPrev;
 
     newMove = (struct Move *) malloc(sizeof(struct Move));
     newMove->player = player;
-    newMove->position = position;
+    newMove->posX = posX;
+    newMove->posY = posY;
     newMove->nextMove = NULL;
     newMove->prevMove = NULL;
 
@@ -135,9 +137,7 @@ void playGameWithFeatures() {
                         scanf("%d", &position);
                     }
 
-                    printf("Pos Y is %d", posY);
-
-                    currentLast = addToEnd(&qHead, PLAYER_B, position);
+                    currentLast = addToEnd(&qHead, PLAYER_B, position, posY);
 
                     if (isWinning(board, PLAYER_B)) {
                         updateBoard(board);
@@ -147,7 +147,7 @@ void playGameWithFeatures() {
                     break;
                 case 2:
                     printf("Undoing move.\n");
-                    // deleteDisc(board, currentLast->position, )
+                    // deleteDisc(board, currentLast->posX, )
                     break;
                 case 3:
                     printf("Redoing move.\n");
@@ -180,7 +180,7 @@ void playGameWithFeatures() {
                         scanf("%d", &position);
                     }
 
-                    currentLast = addToEnd(&qHead, PLAYER_A, position);
+                    currentLast = addToEnd(&qHead, PLAYER_A, position, posY);
 
                     if (isWinning(board, PLAYER_A)) {
                         updateBoard(board);
@@ -213,5 +213,5 @@ void printActionsMenu(char player) {
 }
 
 void printChoosePosition(char player) {
-    printf("Player %c choose position: \n", player);
+    printf("Player %c choose posX: \n", player);
 }

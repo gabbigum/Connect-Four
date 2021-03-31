@@ -7,13 +7,13 @@
 // returns the Y coordinate of the inserted move
 int insertDisc(char board[BOARD_HEIGHT][BOARD_WIDTH], char player, int position) {
     if (position > BOARD_WIDTH || position <= 0) {
-        printf("Your move is not valid. Your position must be between %d and %d. Please select another position.\n", 1, BOARD_WIDTH);
+        printf("Your move is not valid. Your posX must be between %d and %d. Please select another posX.\n", 1, BOARD_WIDTH);
         return -1;
     }
     position--;
     // check if it is at the top of the board
     if (board[0][position] != '.') {
-        printf("Your move is not valid. You have reached the top of the board. Please select another position.\n");
+        printf("Your move is not valid. You have reached the top of the board. Please select another posX.\n");
         return -1;
     }
 
