@@ -61,10 +61,13 @@ void playGame() {
         if (movesCounter % 2 == 0) {
             printf("Player B choose a position :");
             scanf("%d", &position);
-            insertDisc(board, PLAYER_B, position);
+
+            while(insertDisc(board, PLAYER_B, position) == -1) {
+                printf("Player B choose a position :");
+                scanf("%d", &position);
+            }
 
             addToEnd(&qHead, PLAYER_B, position);
-           // currentMove = qHead;
 
             if (isWinning(board, PLAYER_B)) {
                 updateBoard(board);

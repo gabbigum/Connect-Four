@@ -12,6 +12,8 @@ void updateBoard(char [BOARD_HEIGHT][BOARD_WIDTH]);
 
 void fillBoard(char [BOARD_HEIGHT][BOARD_WIDTH]);
 
-bool insertDisc(char [BOARD_HEIGHT][BOARD_WIDTH], char, int);
+int insertDisc(char [BOARD_HEIGHT][BOARD_WIDTH], char, int);
+
+bool deleteDisc(char [BOARD_HEIGHT][BOARD_WIDTH], int, int);
 
 #endif

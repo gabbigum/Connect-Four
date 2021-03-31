@@ -3,17 +3,19 @@
 //
 
 #include "board_actions.h"
-bool insertDisc(char board[BOARD_HEIGHT][BOARD_WIDTH], char player, int position) {
+
+int insertDisc(char board[BOARD_HEIGHT][BOARD_WIDTH], char player, int position) {
     if (position > BOARD_WIDTH || position <= 0) {
-        return false;
+        printf("Your move is not valid. Your position must be between %d and %d. Please select another position.\n", 1, BOARD_WIDTH);
+        return -1;
     }
     position--;
     // check if it is at the top of the board
-    //TODO bug there
     if (board[0][position] != '.') {
-        printf("Your move is not valid. You have reached the top of the board.\n");
-        return false;
+        printf("Your move is not valid. You have reached the top of the board. Please select another position.\n");
+        return -1;
     }
+
 
     // iterate over the height
     int i = 0;
@@ -24,7 +26,19 @@ bool insertDisc(char board[BOARD_HEIGHT][BOARD_WIDTH], char player, int position
         i++;
     }
 
-    board[i - 1][position] = player;
+    int resultIndex = i - 1; // because we don't want to overlap existing elements in the board
+    board[resultIndex][position] = player;
+
+    return resultIndex;
+}
+
+bool deleteDisc(char board[BOARD_HEIGHT][BOARD_WIDTH], int posX, int posY) {
+    if (posX > BOARD_WIDTH || posY <= 0) {
+        return false;
+    }
+    posX--;
+
+    board[posY][posX] = '.';
 
     return true;
 }
