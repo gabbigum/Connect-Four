@@ -10,6 +10,7 @@
 #define PLAYER_A 'A'
 #define PLAYER_B 'B'
 
-void playGame();
+void playDefaultGame();
+void playGameWithFeatures();
 
 #endif //CONNECT_FOUR_GAME_ENGINE_H

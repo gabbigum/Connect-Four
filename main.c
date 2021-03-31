@@ -3,6 +3,6 @@
 #include "game_engine.h"
 
 int main() {
-    playGame();
+    playDefaultGame();
     return 0;
 }
