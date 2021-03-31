@@ -13,38 +13,29 @@ struct Move {
     struct Move *prevMove;
 };
 
-struct MovesQueue {
-    struct Move *front, *currentMove, *rear;
-    // the logic will look like that
-    // on UNDO - if the currentMove is rear
-    // -> get that data and remove the disc from the board ->removeDisc(board, player, position)
-    // on REDO -> read currentMove.nextMove and insertDisc(board, player, position)
-};
+void addToEnd(struct Move **queue, char player, int position) {
+    struct Move *iterator, *newMove, *currentPrev;
 
-struct MovesQueue* init() {
-    struct MovesQueue *queue = (struct MovesQueue*) malloc(sizeof(struct MovesQueue));
-    queue->front = NULL;
-    queue->rear = NULL;
-    queue->currentMove = NULL;
-}
+    newMove = (struct Move *) malloc(sizeof(struct Move));
+    newMove->player = player;
+    newMove->position = position;
+    newMove->nextMove = NULL;
+    newMove->prevMove = NULL;
 
-void addToEnd(struct MovesQueue *pQueue, struct Move *move) {
-    if (pQueue == NULL) {
-        // create new queue and add move as element
-        pQueue->currentMove = move;
-        pQueue->front = move;
-        pQueue->rear = move;
-
+    if(*queue == NULL) {
+        *queue = newMove;
     } else {
-        struct Move *iterator;
-        iterator = pQueue->front;
+        iterator = *queue;
+        currentPrev = iterator;
 
         while(iterator->nextMove != NULL) {
+            currentPrev = iterator;
             iterator = iterator->nextMove;
         }
-        move->prevMove = iterator;
-        move->nextMove = NULL;
-        iterator->nextMove = move;
+
+        iterator->nextMove = newMove;
+        newMove->prevMove = currentPrev;
+        iterator->prevMove = currentPrev;
     }
 }
 
@@ -52,7 +43,7 @@ void addToEnd(struct MovesQueue *pQueue, struct Move *move) {
 void playGame() {
     char board[BOARD_HEIGHT][BOARD_WIDTH];
     // moves queue
-
+    struct Move *qHead;
 
     fillBoard(board);
 
@@ -71,6 +62,8 @@ void playGame() {
             scanf("%d", &position);
             insertDisc(board, PLAYER_B, position);
 
+            addToEnd(&qHead, PLAYER_B, position); // test this
+
             if (isWinning(board, PLAYER_B)) {
                 printf("Player B wins!\n"); // might use string
                 hasWinner = true;
@@ -79,6 +72,9 @@ void playGame() {
             printf("Player A choose a position :");
             scanf("%d", &position);
             insertDisc(board, PLAYER_A, position);
+
+            addToEnd(&qHead, PLAYER_A, position); // test this
+
             if (isWinning(board, PLAYER_A)) {
                 printf("Player A wins!\n"); // might use string
                 hasWinner = true;
