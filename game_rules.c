@@ -95,9 +95,9 @@ bool areFourConsecutive(char player, const char *diagonals) {
 
 bool checkRightDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     // lower half - works
-    for (int k = BOARD_HEIGHT - 1; k >= 0; k--) {
-        int i = k;
-        int j = BOARD_WIDTH - 1;
+    for (int k = BOARD_WIDTH - 1; k >= 0; k--) {
+        int i = BOARD_HEIGHT - 1;
+        int j = k;
 
         char diagonals[BOARD_HEIGHT];
         int counter = 0;

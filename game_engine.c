@@ -44,6 +44,7 @@ void playGame() {
     char board[BOARD_HEIGHT][BOARD_WIDTH];
     // moves queue
     struct Move *qHead;
+  //  struct Move *currentMove;
 
     fillBoard(board);
 
@@ -62,9 +63,11 @@ void playGame() {
             scanf("%d", &position);
             insertDisc(board, PLAYER_B, position);
 
-            addToEnd(&qHead, PLAYER_B, position); // test this
+            addToEnd(&qHead, PLAYER_B, position);
+           // currentMove = qHead;
 
             if (isWinning(board, PLAYER_B)) {
+                updateBoard(board);
                 printf("Player B wins!\n"); // might use string
                 hasWinner = true;
             }
@@ -76,6 +79,7 @@ void playGame() {
             addToEnd(&qHead, PLAYER_A, position); // test this
 
             if (isWinning(board, PLAYER_A)) {
+                updateBoard(board);
                 printf("Player A wins!\n"); // might use string
                 hasWinner = true;
             }
