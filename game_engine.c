@@ -6,6 +6,7 @@
 #include "game_engine.h"
 
 void printActionsMenu(char);
+
 void printChoosePosition(char);
 
 //TODO I might want to use doubly linked list
@@ -16,7 +17,7 @@ struct Move {
     struct Move *prevMove;
 };
 
-void addToEnd(struct Move **queue, char player, int position) {
+struct Move* addToEnd(struct Move **queue, char player, int position) {
     struct Move *iterator, *newMove, *currentPrev;
 
     newMove = (struct Move *) malloc(sizeof(struct Move));
@@ -40,6 +41,7 @@ void addToEnd(struct Move **queue, char player, int position) {
         newMove->prevMove = currentPrev;
         iterator->prevMove = currentPrev;
     }
+    return newMove;
 }
 
 void playDefaultGame() {
@@ -93,7 +95,8 @@ void playDefaultGame() {
 void playGameWithFeatures() {
     char board[BOARD_HEIGHT][BOARD_WIDTH];
     // moves queue
-    struct Move *qHead;
+    struct Move *qHead = NULL;
+    struct Move *currentLast = NULL;
     //  struct Move *currentMove;
 
     fillBoard(board);
@@ -114,7 +117,7 @@ void playGameWithFeatures() {
             int action;
             scanf("%d", &action);
 
-            while (action < 0 || action > 2) {
+            while (action < 0 || action > 3) {
                 printf("Action does not exist in the list.");
                 printActionsMenu(PLAYER_B);
                 scanf("%d", &action);
@@ -122,15 +125,19 @@ void playGameWithFeatures() {
 
             switch (action) {
                 case 1: // make this separate method
-                    printf("Player B choose a position :");
+                    printChoosePosition(PLAYER_B);
                     scanf("%d", &position);
 
-                    while (insertDisc(board, PLAYER_B, position) == -1) {
-                        printf("Player B choose a position :");
+                    int posY;
+
+                    while ((posY = insertDisc(board, PLAYER_B, position)) == -1) {
+                        printChoosePosition(PLAYER_B);
                         scanf("%d", &position);
                     }
 
-                    addToEnd(&qHead, PLAYER_B, position);
+                    printf("Pos Y is %d", posY);
+
+                    currentLast = addToEnd(&qHead, PLAYER_B, position);
 
                     if (isWinning(board, PLAYER_B)) {
                         updateBoard(board);
@@ -140,6 +147,7 @@ void playGameWithFeatures() {
                     break;
                 case 2:
                     printf("Undoing move.\n");
+                    // deleteDisc(board, currentLast->position, )
                     break;
                 case 3:
                     printf("Redoing move.\n");
@@ -154,7 +162,7 @@ void playGameWithFeatures() {
             int action;
             scanf("%d", &action);
 
-            while (action < 0 || action > 2) {
+            while (action < 0 || action > 3) {
                 printf("Action does not exist in the list.");
                 printActionsMenu(PLAYER_A);
 
@@ -163,15 +171,16 @@ void playGameWithFeatures() {
 
             switch (action) {
                 case 1: // make this separate method
-                    printf("Player A choose a position :");
+                    printChoosePosition(PLAYER_A);
                     scanf("%d", &position);
+                    int posY;
 
-                    while (insertDisc(board, PLAYER_A, position) == -1) {
-                        printf("Player A choose a position :");
+                    while ((posY =  insertDisc(board, PLAYER_A, position)) == -1) {
+                        printChoosePosition(PLAYER_A);
                         scanf("%d", &position);
                     }
 
-                    addToEnd(&qHead, PLAYER_A, position);
+                    currentLast = addToEnd(&qHead, PLAYER_A, position);
 
                     if (isWinning(board, PLAYER_A)) {
                         updateBoard(board);
