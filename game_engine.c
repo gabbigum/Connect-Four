@@ -2,21 +2,52 @@
 // Created by Gabi on 30/03/2021.
 //
 
+#include <malloc.h>
 #include "game_engine.h"
 
+//TODO I might want to use doubly linked list
 struct Move {
     char player;
     int position;
     struct Move *nextMove;
+    struct Move *prevMove;
 };
 
 struct MovesQueue {
-    struct Move *currentMove, *rear;
+    struct Move *front, *currentMove, *rear;
     // the logic will look like that
     // on UNDO - if the currentMove is rear
     // -> get that data and remove the disc from the board ->removeDisc(board, player, position)
     // on REDO -> read currentMove.nextMove and insertDisc(board, player, position)
 };
+
+struct MovesQueue* init() {
+    struct MovesQueue *queue = (struct MovesQueue*) malloc(sizeof(struct MovesQueue));
+    queue->front = NULL;
+    queue->rear = NULL;
+    queue->currentMove = NULL;
+}
+
+void addToEnd(struct MovesQueue *pQueue, struct Move *move) {
+    if (pQueue == NULL) {
+        // create new queue and add move as element
+        pQueue->currentMove = move;
+        pQueue->front = move;
+        pQueue->rear = move;
+
+    } else {
+        struct Move *iterator;
+        iterator = pQueue->front;
+
+        while(iterator->nextMove != NULL) {
+            iterator = iterator->nextMove;
+        }
+        move->prevMove = iterator;
+        move->nextMove = NULL;
+        iterator->nextMove = move;
+    }
+}
+
 
 void playGame() {
     char board[BOARD_HEIGHT][BOARD_WIDTH];
