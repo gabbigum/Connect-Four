@@ -19,7 +19,7 @@ struct Move {
 };
 
 struct Move* addToEnd(struct Move **queue, char player, int posX, int posY) {
-    struct Move *iterator, *newMove, *currentPrev;
+    struct Move *iterator, *newMove;
 
     newMove = (struct Move *) malloc(sizeof(struct Move));
     newMove->player = player;
@@ -32,16 +32,13 @@ struct Move* addToEnd(struct Move **queue, char player, int posX, int posY) {
         *queue = newMove;
     } else {
         iterator = *queue;
-        currentPrev = iterator;
 
         while (iterator->nextMove != NULL) {
-            currentPrev = iterator;
             iterator = iterator->nextMove;
         }
 
         iterator->nextMove = newMove;
-        newMove->prevMove = currentPrev;
-        iterator->prevMove = currentPrev;
+        iterator->nextMove->prevMove = iterator;
     }
     return newMove;
 }
@@ -148,7 +145,7 @@ void playGameWithFeatures() {
                 case 2:
                     printf("Undoing move.\n");
                     deleteDisc(board, currentLast->posX, currentLast->posY);
-                    currentLast = qHead->prevMove;
+
                     // and move currentPos 1 step behind
                     break;
                 case 3:
@@ -184,6 +181,7 @@ void playGameWithFeatures() {
 
                     currentLast = addToEnd(&qHead, PLAYER_A, position, posY);
 
+
                     if (isWinning(board, PLAYER_A)) {
                         updateBoard(board);
                         printf("Player A wins!\n"); // might use string
@@ -194,7 +192,8 @@ void playGameWithFeatures() {
                     printf("Undoing move.\n");
                     // if board is empty = do not do anything
                     deleteDisc(board, currentLast->posX, currentLast->posY);
-                    currentLast = qHead->prevMove;
+                    currentLast = currentLast->prevMove;
+
                     /* error handling
                     if(currentLast->prevMove != NULL) {
                         currentLast = currentLast->prevMove;
