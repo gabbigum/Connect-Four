@@ -117,7 +117,7 @@ void playGameWithFeatures() {
             scanf("%d", &action);
 
             while (action < 0 || action > 3) {
-                printf("Action does not exist in the list.");
+                printf("Action does not exist in the list.\n");
                 printActionsMenu(PLAYER_B);
                 scanf("%d", &action);
             }
@@ -153,7 +153,15 @@ void playGameWithFeatures() {
 
                     break;
                 case 3:
-                    printf("Redoing move.\n");
+                    if (currentLast->nextMove == NULL || currentLast->prevMove == NULL) {
+                        printf("No moves to redo.\n");
+                    } else {
+                        printf("Redoing move.\n");
+                        currentLast = currentLast->nextMove;
+                        insertDisc(board, PLAYER_B, currentLast->posX);
+                    }
+
+
                     break;
                 default:
                     break;
@@ -166,7 +174,7 @@ void playGameWithFeatures() {
             scanf("%d", &action);
 
             while (action < 0 || action > 3) {
-                printf("Action does not exist in the list.");
+                printf("Action does not exist in the list.\n");
                 printActionsMenu(PLAYER_A);
 
                 scanf("%d", &action);
@@ -201,7 +209,14 @@ void playGameWithFeatures() {
                     }
                     break;
                 case 3:
-                    printf("Redoing move.\n");
+                    if (currentLast->nextMove == NULL || currentLast->prevMove == NULL) {
+                        printf("No moves to redo.\n");
+                    } else {
+                        printf("Redoing move.\n");
+                        currentLast = currentLast->nextMove;
+                        insertDisc(board, PLAYER_A, currentLast->posX);
+                    }
+
                     break;
                 default:
                     break;
