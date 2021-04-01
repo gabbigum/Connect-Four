@@ -18,7 +18,7 @@ struct Move {
     struct Move *prevMove;
 };
 
-struct Move* addToEnd(struct Move **queue, char player, int posX, int posY) {
+struct Move *addToEnd(struct Move **queue, char player, int posX, int posY) {
     struct Move *iterator, *newMove;
 
     newMove = (struct Move *) malloc(sizeof(struct Move));
@@ -143,7 +143,7 @@ void playGameWithFeatures() {
                     }
                     break;
                 case 2:
-                    if(currentLast == NULL) {
+                    if (currentLast == NULL) {
                         printf("No moves to undo.\n");
                     } else {
                         printf("Undoing move.\n");
@@ -151,7 +151,6 @@ void playGameWithFeatures() {
                         currentLast = currentLast->prevMove;
                     }
 
-                    // and move currentPos 1 step behind
                     break;
                 case 3:
                     printf("Redoing move.\n");
@@ -179,13 +178,12 @@ void playGameWithFeatures() {
                     scanf("%d", &position);
                     int posY;
 
-                    while ((posY =  insertDisc(board, PLAYER_A, position)) == -1) {
+                    while ((posY = insertDisc(board, PLAYER_A, position)) == -1) {
                         printChoosePosition(PLAYER_A);
                         scanf("%d", &position);
                     }
 
                     currentLast = addToEnd(&qHead, PLAYER_A, position, posY);
-
 
                     if (isWinning(board, PLAYER_A)) {
                         updateBoard(board);
@@ -194,22 +192,13 @@ void playGameWithFeatures() {
                     }
                     break;
                 case 2:
-                    if(currentLast == NULL) {
+                    if (currentLast == NULL) {
                         printf("No moves to undo.\n");
                     } else {
                         printf("Undoing move.\n");
-                        // if board is empty = do not do anything
                         deleteDisc(board, currentLast->posX, currentLast->posY);
                         currentLast = currentLast->prevMove;
                     }
-
-                    /* error handling
-                    if(currentLast->prevMove != NULL) {
-                        currentLast = currentLast->prevMove;
-                    } else{
-
-                    }*/
-
                     break;
                 case 3:
                     printf("Redoing move.\n");
