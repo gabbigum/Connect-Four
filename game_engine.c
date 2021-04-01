@@ -147,7 +147,9 @@ void playGameWithFeatures() {
                     break;
                 case 2:
                     printf("Undoing move.\n");
-                    // deleteDisc(board, currentLast->posX, )
+                    deleteDisc(board, currentLast->posX, currentLast->posY);
+                    currentLast = qHead->prevMove;
+                    // and move currentPos 1 step behind
                     break;
                 case 3:
                     printf("Redoing move.\n");
@@ -190,6 +192,16 @@ void playGameWithFeatures() {
                     break;
                 case 2:
                     printf("Undoing move.\n");
+                    // if board is empty = do not do anything
+                    deleteDisc(board, currentLast->posX, currentLast->posY);
+                    currentLast = qHead->prevMove;
+                    /* error handling
+                    if(currentLast->prevMove != NULL) {
+                        currentLast = currentLast->prevMove;
+                    } else{
+
+                    }*/
+
                     break;
                 case 3:
                     printf("Redoing move.\n");
@@ -208,10 +220,10 @@ void playGameWithFeatures() {
 void printActionsMenu(char player) {
     printf("Player %c choose an action\n"
            "1. Insert move.\n"
-           "1. Undo move.\n"
-           "2. Redo move.\n", player);
+           "2. Undo move.\n"
+           "3. Redo move.\n", player);
 }
 
 void printChoosePosition(char player) {
-    printf("Player %c choose posX: \n", player);
+    printf("Player %c choose position: \n", player);
 }
