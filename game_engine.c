@@ -150,7 +150,6 @@ void playGameWithFeatures() {
                         deleteDisc(board, currentLast->posX, currentLast->posY);
                         currentLast = currentLast->prevMove;
                     }
-
                     break;
                 case 3:
                     if (currentLast == NULL) {
@@ -231,8 +230,8 @@ void playGameWithFeatures() {
                         currentLast = currentLast->nextMove;
                         insertDisc(board, PLAYER_A, currentLast->posX);
                     }
-
                     break;
+
                 default:
                     break;
             }
