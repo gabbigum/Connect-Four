@@ -153,14 +153,21 @@ void playGameWithFeatures() {
 
                     break;
                 case 3:
-                    if (currentLast->nextMove == NULL || currentLast->prevMove == NULL) {
+                    if (currentLast == NULL) {
+                        if (qHead == NULL) {
+                            printf("No moves to redo.\n");
+                            break;
+                        } else {
+                            currentLast = qHead;
+                        }
+                    }
+                    if (currentLast->nextMove == NULL) {
                         printf("No moves to redo.\n");
                     } else {
                         printf("Redoing move.\n");
                         currentLast = currentLast->nextMove;
                         insertDisc(board, PLAYER_B, currentLast->posX);
                     }
-
 
                     break;
                 default:
@@ -209,7 +216,15 @@ void playGameWithFeatures() {
                     }
                     break;
                 case 3:
-                    if (currentLast->nextMove == NULL || currentLast->prevMove == NULL) {
+                    if (currentLast == NULL) {
+                        if (qHead == NULL) {
+                            printf("No moves to redo.\n");
+                            break;
+                        } else {
+                            currentLast = qHead;
+                        }
+                    }
+                    if (currentLast->nextMove == NULL) {
                         printf("No moves to redo.\n");
                     } else {
                         printf("Redoing move.\n");
