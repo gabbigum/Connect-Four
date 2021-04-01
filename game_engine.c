@@ -43,6 +43,7 @@ struct Move *addToEnd(struct Move **queue, char player, int posX, int posY) {
     return newMove;
 }
 
+
 void playDefaultGame() {
     char board[BOARD_HEIGHT][BOARD_WIDTH];
 
@@ -246,7 +247,6 @@ void playGameWithFeatures() {
         position = 0;
     }
 }
-
 
 void printActionsMenu(char player) {
     printf("Player %c choose an action\n"
