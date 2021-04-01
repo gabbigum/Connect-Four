@@ -145,7 +145,7 @@ void playGameWithFeatures() {
                 case 2:
                     printf("Undoing move.\n");
                     deleteDisc(board, currentLast->posX, currentLast->posY);
-
+                    currentLast = currentLast->prevMove;
                     // and move currentPos 1 step behind
                     break;
                 case 3:
@@ -193,7 +193,6 @@ void playGameWithFeatures() {
                     // if board is empty = do not do anything
                     deleteDisc(board, currentLast->posX, currentLast->posY);
                     currentLast = currentLast->prevMove;
-
                     /* error handling
                     if(currentLast->prevMove != NULL) {
                         currentLast = currentLast->prevMove;
