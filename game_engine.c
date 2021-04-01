@@ -158,6 +158,8 @@ void playGameWithFeatures() {
                             break;
                         } else {
                             currentLast = qHead;
+                            insertDisc(board, PLAYER_B, currentLast->posX);
+                            break;
                         }
                     }
                     if (currentLast->nextMove == NULL) {
@@ -166,6 +168,7 @@ void playGameWithFeatures() {
                         printf("Redoing move.\n");
                         currentLast = currentLast->nextMove;
                         insertDisc(board, PLAYER_B, currentLast->posX);
+
                     }
 
                     break;
@@ -221,6 +224,8 @@ void playGameWithFeatures() {
                             break;
                         } else {
                             currentLast = qHead;
+                            insertDisc(board, PLAYER_A, currentLast->posX);
+                            break;
                         }
                     }
                     if (currentLast->nextMove == NULL) {
