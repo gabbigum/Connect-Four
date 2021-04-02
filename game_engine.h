@@ -6,6 +6,7 @@
 #define CONNECT_FOUR_GAME_ENGINE_H
 
 #include "board_actions.h"
+#include "moves_queue.h"
 
 #define PLAYER_A 'A'
 #define PLAYER_B 'B'

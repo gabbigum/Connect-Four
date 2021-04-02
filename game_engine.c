@@ -9,41 +9,6 @@ void printActionsMenu(char);
 
 void printChoosePosition(char);
 
-//TODO I might want to use doubly linked list
-struct Move {
-    char player;
-    int posX;
-    int posY;
-    struct Move *nextMove;
-    struct Move *prevMove;
-};
-
-struct Move *addToEnd(struct Move **queue, char player, int posX, int posY) {
-    struct Move *iterator, *newMove;
-
-    newMove = (struct Move *) malloc(sizeof(struct Move));
-    newMove->player = player;
-    newMove->posX = posX;
-    newMove->posY = posY;
-    newMove->nextMove = NULL;
-    newMove->prevMove = NULL;
-
-    if (*queue == NULL) {
-        *queue = newMove;
-    } else {
-        iterator = *queue;
-
-        while (iterator->nextMove != NULL) {
-            iterator = iterator->nextMove;
-        }
-
-        iterator->nextMove = newMove;
-        iterator->nextMove->prevMove = iterator;
-    }
-    return newMove;
-}
-
-
 void playDefaultGame() {
     char board[BOARD_HEIGHT][BOARD_WIDTH];
 
