@@ -9,6 +9,42 @@ void printActionsMenu(char);
 
 void printChoosePosition(char);
 
+void playerInteraction(char [BOARD_HEIGHT][BOARD_WIDTH], char, int);
+
+bool isPlayerWinning(char [BOARD_HEIGHT][BOARD_WIDTH], char);
+
+
+void printActionsMenu(char player) {
+    printf("Player %c choose an action\n"
+           "1. Insert move.\n"
+           "2. Undo move.\n"
+           "3. Redo move.\n", player);
+}
+
+void printChoosePosition(char player) {
+    printf("Player %c choose position: \n", player);
+}
+
+
+void playerInteraction(char board[6][7], char player, int position) {
+    printChoosePosition(player);
+    scanf("%d", &position);
+
+    while (insertDisc(board, player, position) == -1) {
+        printChoosePosition(player);
+        scanf("%d", &position);
+    }
+}
+
+bool isPlayerWinning(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
+    if (isWinning(board, player)) {
+        updateBoard(board);
+        printf("Player %c wins!\n", player);
+        return true;
+    }
+    return false;
+}
+
 void playDefaultGame() {
     char board[BOARD_HEIGHT][BOARD_WIDTH];
 
@@ -25,32 +61,15 @@ void playDefaultGame() {
         int position;
 
         if (movesCounter % 2 == 0) {
-            printChoosePosition(PLAYER_B);
-            scanf("%d", &position);
 
-            while (insertDisc(board, PLAYER_B, position) == -1) {
-                printChoosePosition(PLAYER_B);
-                scanf("%d", &position);
-            }
-            if (isWinning(board, PLAYER_B)) {
-                updateBoard(board);
-                printf("Player B wins!\n"); // might use string
-                hasWinner = true;
-            }
+            playerInteraction(board, PLAYER_B, position);
+
+            hasWinner = isPlayerWinning(board, PLAYER_B);
         } else {
-            printChoosePosition(PLAYER_A);
-            scanf("%d", &position);
 
-            while (insertDisc(board, PLAYER_A, position) == -1) {
-                printChoosePosition(PLAYER_A);
-                scanf("%d", &position);
-            }
+            playerInteraction(board, PLAYER_A, position);
 
-            if (isWinning(board, PLAYER_A)) {
-                updateBoard(board);
-                printf("Player A wins!\n"); // might use string
-                hasWinner = true;
-            }
+            hasWinner = isPlayerWinning(board, PLAYER_A);
         }
         movesCounter++;
         position = 0;
@@ -102,11 +121,7 @@ void playGameWithFeatures() {
 
                     currentLast = addToEnd(&qHead, PLAYER_B, position, posY);
 
-                    if (isWinning(board, PLAYER_B)) {
-                        updateBoard(board);
-                        printf("Player B wins!\n"); // might use string
-                        hasWinner = true;
-                    }
+                    hasWinner = isPlayerWinning(board, PLAYER_B);
                     break;
                 case 2:
                     if (currentLast == NULL) {
@@ -168,11 +183,7 @@ void playGameWithFeatures() {
 
                     currentLast = addToEnd(&qHead, PLAYER_A, position, posY);
 
-                    if (isWinning(board, PLAYER_A)) {
-                        updateBoard(board);
-                        printf("Player A wins!\n"); // might use string
-                        hasWinner = true;
-                    }
+                    hasWinner = isPlayerWinning(board, PLAYER_A);
                     break;
                 case 2:
                     if (currentLast == NULL) {
@@ -211,15 +222,4 @@ void playGameWithFeatures() {
         movesCounter++;
         position = 0;
     }
-}
-
-void printActionsMenu(char player) {
-    printf("Player %c choose an action\n"
-           "1. Insert move.\n"
-           "2. Undo move.\n"
-           "3. Redo move.\n", player);
-}
-
-void printChoosePosition(char player) {
-    printf("Player %c choose position: \n", player);
 }
