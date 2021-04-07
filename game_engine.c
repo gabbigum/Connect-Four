@@ -157,6 +157,7 @@ void playGameWithFeatures() {
                         printf("No moves to undo.\n");
                     } else {
                         printf("Undoing move.\n");
+                        saveCounter--;
                         deleteDisc(board, currentLast->posX, currentLast->posY);
                         currentLast = currentLast->prevMove;
                     }
@@ -168,6 +169,7 @@ void playGameWithFeatures() {
                             break;
                         } else {
                             currentLast = qHead;
+                            saveCounter++;
                             insertDisc(board, currentLast->player, currentLast->posX);
                             break;
                         }
@@ -176,6 +178,7 @@ void playGameWithFeatures() {
                         printf("No moves to redo.\n");
                     } else {
                         printf("Redoing move.\n");
+                        saveCounter++;
                         currentLast = currentLast->nextMove;
                         insertDisc(board, currentLast->player, currentLast->posX);
 
@@ -222,6 +225,7 @@ void playGameWithFeatures() {
                         printf("No moves to undo.\n");
                     } else {
                         printf("Undoing move.\n");
+                        saveCounter--;
                         deleteDisc(board, currentLast->posX, currentLast->posY);
                         currentLast = currentLast->prevMove;
                     }
@@ -233,6 +237,7 @@ void playGameWithFeatures() {
                             break;
                         } else {
                             currentLast = qHead;
+                            saveCounter++;
                             insertDisc(board, currentLast->player, currentLast->posX);
                             break;
                         }
@@ -241,6 +246,7 @@ void playGameWithFeatures() {
                         printf("No moves to redo.\n");
                     } else {
                         printf("Redoing move.\n");
+                        saveCounter++;
                         currentLast = currentLast->nextMove;
                         insertDisc(board, currentLast->player, currentLast->posX);
                     }
