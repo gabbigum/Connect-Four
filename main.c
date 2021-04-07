@@ -1,8 +1,6 @@
-#include <stdio.h>
-#include <stdbool.h>
 #include "game_engine.h"
 
 int main() {
-    playDefaultGame();
+    playGameWithFeatures();
     return 0;
 }
