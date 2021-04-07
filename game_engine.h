@@ -13,5 +13,6 @@
 
 void playDefaultGame();
 void playGameWithFeatures();
+void playGameFromSavedFile();
 
 #endif //CONNECT_FOUR_GAME_ENGINE_H

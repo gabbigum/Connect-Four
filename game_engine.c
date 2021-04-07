@@ -17,6 +17,8 @@ bool isPlayerWinning(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
 void saveGame(int[SAVE_SIZE]);
 
+int loadGame(char *, int *);
+
 void printActionsMenu(char player) {
     printf("Player %c choose an action\n"
            "1. Insert move.\n"
@@ -34,7 +36,7 @@ void saveGame(int save[SAVE_SIZE]) {
     char fileName[50];
     printf("Enter file name:\n");
 
-    scanf("%s",fileName);
+    scanf("%s", fileName);
 
     file = fopen(fileName, "w");
 
@@ -48,6 +50,28 @@ void saveGame(int save[SAVE_SIZE]) {
 
     printf("Game saved!");
     fclose(file);
+
+}
+
+int loadGame(char *fileName, int *arr) {
+    FILE *file;
+    file = fopen(fileName, "r");
+
+    if (file == NULL) {
+        printf("Couldn't find the file.\n");
+        return 0;
+    }
+
+    int index = 0;
+    char line[100];
+    while (fgets(line, sizeof(line), file)) {
+        int num = atoi(line);
+        arr[index] = num;
+        index++;
+    }
+
+    fclose(file);
+    return index;
 }
 
 void playerInteraction(char board[6][7], char player, int position) {
@@ -98,6 +122,50 @@ void playDefaultGame() {
         movesCounter++;
         position = 0;
     }
+}
+
+void playGameFromSavedFile() {
+    char fileName[50];
+    printf("Enter saved file name: ");
+    scanf("%s", fileName);
+    int arr[SAVE_SIZE];
+    // read moves from file
+    int lines = loadGame(fileName, &arr);
+
+    for (int i = 0; i < lines; i++) {
+        printf("%d\n", arr[i]);
+    }
+
+    char board[BOARD_HEIGHT][BOARD_WIDTH];
+
+    fillBoard(board);
+
+    // THIS WHOLE THING UNDER COULD BE SEPARATE METHOD TO BE SELECTED FROM THE MENU
+    // FOR EXAMPLE THE GAME COULD BE PLAYED BY MORE THAN 1 PLAYER
+    int movesCounter = 1;
+    bool hasWinner = false;
+    int movesIndex = 0;
+
+    while (!hasWinner) {
+        updateBoard(board);
+
+        int position;
+
+        if (movesCounter % 2 == 0) {
+            insertDisc(board, PLAYER_B, arr[movesIndex]);
+
+            hasWinner = isPlayerWinning(board, PLAYER_B);
+        } else {
+
+            insertDisc(board, PLAYER_A, arr[movesIndex]);
+
+            hasWinner = isPlayerWinning(board, PLAYER_A);
+        }
+        movesIndex++;
+        movesCounter++;
+        position = 0;
+    }
+
 }
 
 void playGameWithFeatures() {
