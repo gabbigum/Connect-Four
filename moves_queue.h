@@ -5,6 +5,7 @@
 #ifndef CONNECT_FOUR_MOVES_QUEUE_H
 #define CONNECT_FOUR_MOVES_QUEUE_H
 
+// Queue implementation as doubly linked list
 struct Move {
     char player;
     int posX;

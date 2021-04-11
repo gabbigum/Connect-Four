@@ -16,10 +16,8 @@ bool checkVertical(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
 bool checkDiagonal(char [BOARD_HEIGHT][BOARD_WIDTH], char);
 
-
+// Checks if the player has four consecutive vertical discs
 bool checkVertical(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
-    // iterate columns
-
     for (int i = 0; i < BOARD_WIDTH; i++) {
 
         for (int start = BOARD_HEIGHT - 1, end = start - 4; end >= 0; start--, end--) {
@@ -42,12 +40,8 @@ bool checkVertical(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
 
 // loops over rows starting from the bottom and checks for horizontal connect four starting from left to right
 bool checkHorizontal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
-    // scope is WINNING_DISCS
-    // use windowing for horizontal board
-
     for (int i = BOARD_HEIGHT - 1; i >= 0; i--) {
 
-        // sliding window it would be better if it starts from the bottom
         for (int start = 0, end = WINNING_DISCS; end < BOARD_WIDTH; start++, end++) {
             int consec = 0;
 
@@ -94,7 +88,7 @@ bool areFourConsecutive(char player, const char *diagonals) {
 }
 
 bool checkRightDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
-    // lower half - works
+    // lower half scanning
     for (int k = BOARD_WIDTH - 1; k >= 0; k--) {
         int i = BOARD_HEIGHT - 1;
         int j = k;
@@ -115,7 +109,7 @@ bool checkRightDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
         }
     }
 
-    // upper half - works
+    // upper half scanning
     for(int k = 0; k <= BOARD_HEIGHT-1; k++) {
         int i = k;
         int j = BOARD_WIDTH - 1;
@@ -145,7 +139,6 @@ bool checkLeftDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
         int i = BOARD_HEIGHT - 1;
         int j = k;
 
-        // TODO might be board_height -1
         char diagonals[BOARD_HEIGHT];
         int counter = 0;
 
@@ -167,7 +160,6 @@ bool checkLeftDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
         int i = k;
         int j = 0;
 
-        // create array to store the elements
         char diagonals[BOARD_HEIGHT];
         int counter = 0;
 
@@ -186,7 +178,7 @@ bool checkLeftDiagonal(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     return false;
 }
 
-
+// Performs all the checks to see if player is winning
 bool isWinning(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     return checkHorizontal(board, player) || checkVertical(board, player) || checkDiagonal(board, player);
 }

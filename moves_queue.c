@@ -5,6 +5,7 @@
 #include <malloc.h>
 #include "moves_queue.h"
 
+// adds element to the end of Move queue
 struct Move *addToEnd(struct Move **queue, char player, int posX, int posY) {
     struct Move *iterator, *newMove;
 

@@ -30,7 +30,10 @@ void printChoosePosition(char player) {
     printf("Player %c choose position: \n", player);
 }
 
-
+// Saving game moves separated by new line
+// to a file in the generated executable directory
+// You must specify the file extension to .txt when saving the file
+// e.g. "save_game1.txt"
 void saveGame(int save[SAVE_SIZE]) {
     FILE *file;
     char fileName[50];
@@ -52,7 +55,9 @@ void saveGame(int save[SAVE_SIZE]) {
     fclose(file);
 
 }
-
+// Loads game from a saved game file in the executable directory
+// You must write the file name to the prompt
+// with its extension e.g. "save_file1.txt"
 int loadGame(char *fileName, int *arr) {
     FILE *file;
     file = fopen(fileName, "r");
@@ -73,7 +78,7 @@ int loadGame(char *fileName, int *arr) {
     fclose(file);
     return index;
 }
-
+// Player gets prompted move selection
 void playerInteraction(char board[6][7], char player, int position) {
     printChoosePosition(player);
     scanf("%d", &position);
@@ -93,6 +98,8 @@ bool isPlayerWinning(char board[BOARD_HEIGHT][BOARD_WIDTH], char player) {
     return false;
 }
 
+// Starts default game with none of the extra features
+// Just plain Connect 4.
 void playDefaultGame() {
     char board[BOARD_HEIGHT][BOARD_WIDTH];
 
@@ -124,6 +131,9 @@ void playDefaultGame() {
     }
 }
 
+// Loads game from save game file
+// you must specify the name of the file with its extension
+// e.g. "save_file1.txt" or "save" it depends on how you've saved the file
 void playGameFromSavedFile() {
     char fileName[50];
     printf("Enter saved file name: ");
@@ -140,16 +150,12 @@ void playGameFromSavedFile() {
 
     fillBoard(board);
 
-    // THIS WHOLE THING UNDER COULD BE SEPARATE METHOD TO BE SELECTED FROM THE MENU
-    // FOR EXAMPLE THE GAME COULD BE PLAYED BY MORE THAN 1 PLAYER
     int movesCounter = 1;
     bool hasWinner = false;
     int movesIndex = 0;
 
     while (!hasWinner) {
         updateBoard(board);
-
-        int position;
 
         if (movesCounter % 2 == 0) {
             insertDisc(board, PLAYER_B, arr[movesIndex]);
@@ -163,7 +169,6 @@ void playGameFromSavedFile() {
         }
         movesIndex++;
         movesCounter++;
-        position = 0;
     }
 
 }
